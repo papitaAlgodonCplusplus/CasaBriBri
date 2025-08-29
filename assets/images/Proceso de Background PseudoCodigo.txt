@@ -1,0 +1,316 @@
+INICIAR ejecutar_proceso_background()
+    LEER lista de activos y marcos de tiempo desde la base de datos
+    PARA CADA activo Y timeframe HACER
+        CREAR hilo procesar_mercado(activo, timeframe)
+        INICIAR hilo
+    FIN PARA
+
+    ESPERAR a que todos los hilos terminen
+FIN
+
+# Función principal para cada activo y timeframe
+FUNCIÓN procesar_mercado(activo, timeframe)
+    historial_velas = []
+    max_velas_historial = 200  # Almacena las últimas 200 velas en memoria
+	// Definir el periodo de referencia para máximos y mínimos
+	periodo_referencia = 10  
+
+    MIENTRAS proceso_activo HACER
+        OBTENER nueva vela desde API
+        SI no hay vela nueva ENTONCES CONTINUAR
+
+        # Agregar nueva vela a historial y mantener tamaño máximo
+        historial_velas.append(nueva_vela)
+        SI longitud(historial_velas) > max_velas_historial ENTONCES
+            historial_velas.pop(0)
+        FIN SI
+
+        # Determinar sesión de mercado
+        sesion = determinar_sesion(nueva_vela.timestamp)
+
+        # Calcular indicadores técnicos
+        sma_50 = calcular_SMA(historial_velas, 50)
+        sma_200 = calcular_SMA(historial_velas, 200)
+        ema_50 = calcular_EMA(historial_velas, 50)
+        ema_200 = calcular_EMA(historial_velas, 200)
+        rsi_5 = calcular_RSI(historial_velas, 5)
+
+        // Validar estructura de máximos y mínimos relevantes + detectar ruptura
+        estructura_tipo, tipo_ruptura = validar_estructura_max_min(historial_velas, 10)
+
+        # Procesamiento de imbalances
+        imbalance_detectado = calcular_imbalance(historial_velas)
+        
+        SI imbalance_detectado != "NONE" ENTONCES
+            GUARDAR imbalance_detectado EN market_imbalances  // Guardar nuevo imbalance
+        FIN SI
+
+        # Obtener todos los imbalances activos para actualizar mitigación
+        imbalances_activos = OBTENER market_imbalances DONDE status = "activo"
+        SI imbalances_activos NO ESTÁ VACÍO ENTONCES
+            actualizar_imbalance(historial_velas, imbalances_activos)
+
+            # Buscar el imbalance más reciente después de actualización
+            imbalance_reciente = OBTENER market_imbalances DONDE status = "activo" ORDENAR POR detected_at DESC LIMIT 1
+            SI imbalance_reciente ESTÁ VACÍO ENTONCES
+                imbalance_detectado = "NONE"
+            SINO
+                imbalance_detectado = imbalance_reciente
+            FIN SI
+        FIN SI
+
+        # Almacenar datos en la base de datos
+		GUARDAR EN market_data (
+					activo, timeframe, timestamp, open, high, low, close, volume, sesion,
+					sma_50, sma_200, ema_50, ema_200, rsi_5, estructura_tipo, tipo_ruptura, imbalance_detectado
+				)
+
+        ESPERAR intervalo de tiempo antes de procesar nueva vela
+    FIN MIENTRAS
+FIN
+
+# Función para determinar la sesión de mercado según el horario UTC
+FUNCIÓN determinar_sesion(vela_timestamp)
+    HORA_UTC = convertir_a_UTC(vela_timestamp)  // Asegurar que el timestamp esté en UTC
+
+    SI 23:00 <= HORA_UTC < 08:00 ENTONCES
+        RETORNAR "Asia"
+    SI 07:00 <= HORA_UTC < 12:00 ENTONCES
+        RETORNAR "Londres"
+    SI 12:00 <= HORA_UTC < 16:00 ENTONCES
+        RETORNAR "Londres-NY"  // Solapamiento
+    SI 16:00 <= HORA_UTC < 21:00 ENTONCES
+        RETORNAR "NY"
+    FIN SI
+
+    RETORNAR "Otra"
+FIN
+
+# Función para calcular la SMA (Simple Moving Average)
+FUNCIÓN calcular_SMA(historial, periodo)
+    SI longitud(historial) < periodo ENTONCES RETORNAR NULO
+    RETORNAR PROMEDIO(historial[-periodo:].cierre)
+FIN
+
+# Función para calcular la EMA (Exponential Moving Average)
+FUNCIÓN calcular_EMA(historial, periodo)
+    SI longitud(historial) < periodo ENTONCES RETORNAR NULO
+
+    // Factor de suavizado
+    alpha = 2 / (periodo + 1)
+
+    // Inicializar EMA con SMA del período
+    ema_prev = calcular_SMA(historial[-periodo:], periodo)
+
+    // Aplicar suavizado exponencial en iteración
+    PARA i DESDE -periodo+1 HASTA -1 HACER
+        ema_prev = (historial[i].cierre * alpha) + (ema_prev * (1 - alpha))
+    FIN PARA
+
+    RETORNAR ema_prev
+FIN
+
+
+FUNCIÓN calcular_RSI(historial, periodo)
+    SI longitud(historial) < periodo ENTONCES RETORNAR NULO
+
+    ganancias = []
+    perdidas = []
+
+    // Calcular diferencias entre velas consecutivas
+    PARA i DESDE 1 HASTA periodo HACER
+        diferencia = historial[i].cierre - historial[i-1].cierre
+
+        SI diferencia > 0 ENTONCES
+            AGREGAR diferencia A ganancias
+            AGREGAR 0 A perdidas
+        SINO
+            AGREGAR 0 A ganancias
+            AGREGAR |diferencia| A perdidas
+        FIN SI
+    FIN PARA
+
+    // Cálculo inicial de SMMA usando media simple
+    smma_ganancias = (SUMAR(ganancias) / periodo)
+    smma_perdidas = (SUMAR(perdidas) / periodo)
+
+    // Aplicar SMMA acumulativa para suavizar cambios
+    PARA i DESDE periodo HASTA longitud(historial) - 1 HACER
+        diferencia = historial[i].cierre - historial[i-1].cierre
+
+        SI diferencia > 0 ENTONCES
+            smma_ganancias = ((smma_ganancias * (periodo - 1)) + diferencia) / periodo
+            smma_perdidas = ((smma_perdidas * (periodo - 1)) + 0) / periodo
+        SINO
+            smma_ganancias = ((smma_ganancias * (periodo - 1)) + 0) / periodo
+            smma_perdidas = ((smma_perdidas * (periodo - 1)) + |diferencia|) / periodo
+        FIN SI
+    FIN PARA
+
+    SI smma_perdidas == 0 ENTONCES
+        RETORNAR 100  // No hay pérdidas, RSI = 100
+    FIN SI
+
+    RS = smma_ganancias / smma_perdidas
+    RSI = 100 - (100 / (1 + RS))
+
+    RETORNAR RSI
+FIN
+
+FUNCIÓN validar_estructura_max_min(historial, periodo_referencia)
+    SI longitud(historial) < periodo_referencia * 2 ENTONCES
+        RETORNAR "NONE", "None"  // No hay suficientes datos para evaluar estructura
+    FIN SI
+
+    // Buscar el primer swing significativo hacia atrás desde la vela actual (excluyendo la última)
+    swing_high = NULO
+    swing_low = NULO
+    PARA i DESDE -2 HASTA -longitud(historial) HACER
+         SI es_swing_high(historial, i) ENTONCES
+              swing_high = historial[i].maximo
+              SALIR DEL BUCLE
+         FIN SI
+         SI es_swing_low(historial, i) ENTONCES
+              swing_low = historial[i].minimo
+              SALIR DEL BUCLE
+         FIN SI
+    FIN PARA
+
+    // Elegir la vela objetivo en la posición -periodo_referencia (por ejemplo, la vela N-10)
+    vela_objetivo = historial[-periodo_referencia]
+    tipo_estructura = "NONE"
+
+    // Determinar si la vela objetivo marca un swing high o low
+    SI swing_high != NULO Y vela_objetivo.high >= swing_high ENTONCES
+         // Verificar retestes en un lookback (por ejemplo, 20 velas)
+         retestes = contar_retests(historial, swing_high, 20)
+         SI retestes == 0 ENTONCES
+              tipo_estructura = "MAX_ESTRUCTURAL"
+         SINO SI retestes < 3 ENTONCES
+              tipo_estructura = "MAX_INTERMEDIO"
+         SINO
+              tipo_estructura = "MAX_DEBIL"
+         FIN SI
+    FIN SI
+
+    SI swing_low != NULO Y vela_objetivo.low <= swing_low ENTONCES
+         retestes = contar_retests(historial, swing_low, 20)
+         SI retestes == 0 ENTONCES
+              tipo_estructura = "MIN_ESTRUCTURAL"
+         SINO SI retestes < 3 ENTONCES
+              tipo_estructura = "MIN_INTERMEDIO"
+         SINO
+              tipo_estructura = "MIN_DEBIL"
+         FIN SI
+    FIN SI
+
+    // DETECCIÓN DE RUPTURA
+    tipo_ruptura = "None"
+    // Si hay swing high y la vela actual rompe por encima
+    SI swing_high != NULO Y historial[-1].close > swing_high ENTONCES
+         SI historial[-2].close < swing_high ENTONCES
+              tipo_ruptura = "BoS"
+         FIN SI
+    FIN SI
+    // Si hay swing low y la vela actual rompe por debajo
+    SI swing_low != NULO Y historial[-1].close < swing_low ENTONCES
+         SI historial[-2].close > swing_low ENTONCES
+              tipo_ruptura = "BoS"
+         FIN SI
+    FIN SI
+
+    // DETECCIÓN DE CHANGE OF CHARACTER (ChoCh)
+    SI tipo_ruptura == "BoS" ENTONCES
+         tendencia_anterior = determinar_tendencia(historial)
+         SI (tendencia_anterior == "alcista" Y historial[-1].close < swing_low) O 
+            (tendencia_anterior == "bajista" Y historial[-1].close > swing_high) ENTONCES
+              tipo_ruptura = "ChoCh"
+         FIN SI
+    FIN SI
+
+    RETORNAR tipo_estructura, tipo_ruptura
+FIN
+
+
+
+FUNCIÓN calcular_imbalance(datos_actuales)
+    SI longitud(datos_actuales) < 3 ENTONCES
+        RETORNAR 'NONE'  // No hay suficientes datos para calcular
+    FIN SI
+
+    // Obtener las últimas 3 velas
+    vela_actual = datos_actuales[-1]
+    vela_anterior = datos_actuales[-2]
+    vela_prev_anterior = datos_actuales[-3]
+
+    // Calcular tamaño del cuerpo de la vela (sin mechas)
+    cuerpo_vela_anterior = ABS(vela_anterior.close - vela_anterior.open)
+    cuerpo_vela_prev_anterior = ABS(vela_prev_anterior.close - vela_prev_anterior.open)
+
+    // Detectar imbalance basado en un fuerte movimiento de impulso
+    SI (vela_anterior.high > vela_prev_anterior.high Y vela_anterior.low < vela_prev_anterior.low) Y 
+       (cuerpo_vela_anterior > cuerpo_vela_prev_anterior * 1.5) ENTONCES
+       
+        imbalance_detectado = {
+            "symbol": vela_actual.symbol,
+            "timeframe": vela_actual.timeframe,
+            "high_level": vela_anterior.high,
+            "low_level": vela_anterior.low,
+            "status": "activo",
+            "mitigation_pct": 0,
+            "detected_at": vela_actual.timestamp
+        }
+
+        GUARDAR imbalance_detectado EN base de datos
+    FIN SI
+FIN
+
+FUNCIÓN actualizar_imbalance(datos_actuales, market_imbalances)
+    precio_actual = datos_actuales[-1].cierre
+
+    PARA CADA imbalance EN market_imbalances HACER
+        SI imbalance.status == "mitigado" O imbalance.status == "histórico" ENTONCES
+            CONTINUAR  // Saltar los imbalances ya mitigados o históricos
+        FIN SI
+
+        // Verificar si el precio entró en la zona de imbalance
+        SI (precio_actual <= imbalance.high_level Y precio_actual >= imbalance.low_level) ENTONCES
+            // Calcular cuánto porcentaje se ha mitigado
+            diferencia_total = imbalance.high_level - imbalance.low_level
+            diferencia_mitigada = precio_actual - imbalance.low_level
+            mitigacion_pct = (diferencia_mitigada / diferencia_total) * 100
+
+            SI mitigacion_pct >= 90 ENTONCES
+                // Confirmar que la zona fue testeada al menos en 3 velas
+                contador_velas_en_zona = 0
+                PARA i DESDE -5 HASTA -1 HACER
+                    SI (datos_actuales[i].cierre <= imbalance.high_level Y datos_actuales[i].cierre >= imbalance.low_level) ENTONCES
+                        contador_velas_en_zona += 1
+                    FIN SI
+                FIN PARA
+
+                SI contador_velas_en_zona >= 3 ENTONCES
+                    imbalance.status = "mitigado"
+                    imbalance.mitigated_at = datos_actuales[-1].timestamp
+                    ACTUALIZAR imbalance EN base de datos
+                FIN SI
+            SINO
+                // Crear nuevo registro de imbalance parcial
+                nuevo_imbalance = {
+                    "symbol": imbalance.symbol,
+                    "timeframe": imbalance.timeframe,
+                    "high_level": imbalance.high_level,
+                    "low_level": precio_actual,
+                    "status": "activo",
+                    "mitigation_pct": mitigacion_pct,
+                    "detected_at": datos_actuales[-1].timestamp
+                }
+                GUARDAR nuevo_imbalance EN base de datos
+
+                // Marcar el imbalance anterior como histórico
+                imbalance.status = "histórico"
+                ACTUALIZAR imbalance EN base de datos
+            FIN SI
+        FIN SI
+    FIN PARA
+FIN
