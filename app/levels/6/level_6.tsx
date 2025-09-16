@@ -29,7 +29,7 @@ const visualObjects = [
         imageNormal: require('@/assets/images/iwo_normal.png'),
         imageSelected: require('@/assets/images/iwo_sombra.png'),
         position: { 
-            x: wp('10%'),
+            x: wp('12.7%'),
             y: hp('1%')
         },
         size: {
@@ -59,8 +59,8 @@ const visualObjects = [
         imageNormal: require('@/assets/images/ak_wawe_normal.png'),
         imageSelected: require('@/assets/images/ak_wawe_sombra.png'),
         position: { 
-            x: wp('5%'),
-            y: hp('7%')
+            x: wp('6%'),
+            y: hp('8%')
         },
         size: {
             normal: { width: wp('18%'), height: hp('21%') },
