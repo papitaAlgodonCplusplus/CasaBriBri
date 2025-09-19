@@ -13,12 +13,29 @@ import {
     Text,
     Animated,
     Easing,
+    Dimensions,
+    PixelRatio,
+    Platform,
 } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import BackButton from '../../misc/BackButton';
 import NextButton from '../../misc/NextButton';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+
+
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+const dpiScale = PixelRatio.get();
+// console.log('dpiScale', dpiScale);
+
+const getResponsivePos = (baseXPercent: number, baseYPercent: number) => {
+    const baseX = screenWidth * (baseXPercent / 100);
+    const baseY = screenHeight * (baseYPercent / 100);
+
+    const correctionFactor = dpiScale > 2.5 ? 0.5: 0.5;
+
+    return { x: baseX * correctionFactor, y: baseY * correctionFactor };
+};
 
 const bgImage = require('@/assets/images/guia3juego.png');
 
@@ -29,10 +46,7 @@ const visualObjects = [
         name: 'u_tto',
         imageNormal: require('@/assets/images/u_tto_normal.png'),
         imageSelected: require('@/assets/images/u_tto_sombra.png'),
-        position: { 
-            x: wp('-1%'),
-            y: hp('55%')
-        },
+        position: Platform.OS === 'web' ? { x: wp('-1%'), y: hp('55%') } : getResponsivePos(-1, 109),
         size: {
             normal: { width: wp('23%'), height: hp('20%') },
             selected: { width: wp('23%'), height: hp('21%') }
@@ -44,10 +58,7 @@ const visualObjects = [
         name: 'uko',
         imageNormal: require('@/assets/images/uko_normal.png'),
         imageSelected: require('@/assets/images/uko_sombra.png'),
-        position: { 
-            x: wp('58%'),
-            y: hp('66%')
-        },
+        position: Platform.OS === 'web' ? { x: wp('58%'), y: hp('66%') } : getResponsivePos(116.5, 130),
         size: {
             normal: { width: wp('20%'), height: hp('17%') },
             selected: { width: wp('18%'), height: hp('16%') }
@@ -59,10 +70,7 @@ const visualObjects = [
         name: 'u_tso_pabakok',
         imageNormal: require('@/assets/images/u_tso_pabakok_normal.png'),
         imageSelected: require('@/assets/images/u_tso_pabakok_sombra.png'),
-        position: { 
-            x: wp('59%'),
-            y: hp('20%')
-        },
+        position: Platform.OS === 'web' ? { x: wp('59%'), y: hp('20%') } : getResponsivePos(118, 40),
         size: {
             normal: { width: wp('26%'), height: hp('26%') },
             selected: { width: wp('26%'), height: hp('32%') }
@@ -74,10 +82,7 @@ const visualObjects = [
         name: 'u_tsi',
         imageNormal: require('@/assets/images/u_tsi_normal.png'),
         imageSelected: require('@/assets/images/u_tsi_sombra.png'),
-        position: { 
-            x: wp('43%'),
-            y: hp('58%')
-        },
+        position: Platform.OS === 'web' ? { x: wp('43%'), y: hp('58%') } : getResponsivePos(86, 116),
         size: {
             normal: { width: wp('17%'), height: hp('16%') },
             selected: { width: wp('17%'), height: hp('17%') }
@@ -89,10 +94,7 @@ const visualObjects = [
         name: 'pabakok',
         imageNormal: require('@/assets/images/pabakok_normal.png'),
         imageSelected: require('@/assets/images/pabakok_sombra.png'),
-        position: { 
-            x: wp('22%'),
-            y: hp('9%')
-        },
+        position: Platform.OS === 'web' ? { x: wp('22%'), y: hp('7.5%') } : getResponsivePos(44, 14),
         size: {
             normal: { width: wp('26%'), height: hp('26%') },
             selected: { width: wp('29%'), height: hp('29%') }
@@ -104,10 +106,7 @@ const visualObjects = [
         name: 'etsok',
         imageNormal: require('@/assets/images/etsok_normal.png'),
         imageSelected: require('@/assets/images/etsok_sombra.png'),
-        position: { 
-            x: wp('3%'),
-            y: hp('25%')
-        },
+        position: Platform.OS === 'web' ? { x: wp('4%'), y: hp('24%') } : getResponsivePos(8, 48),
         size: {
             normal: { width: wp('16%'), height: hp('20%') },
             selected: { width: wp('16%'), height: hp('21%') }
@@ -297,7 +296,7 @@ const Level3 = ({ navigation }: { navigation: NavigationProp<any> }) => {
                 <ImageBackground
                     source={require('../../../assets/images/guia3juego.png')}
                     style={styles.backgroundImage}
-                    resizeMode="contain"
+                    resizeMode={Platform.OS === 'web' ? 'contain' : 'stretch'}
                 >
                     {/* Images - Normal and Selected */}
                     {visualObjects.map((item) => (
@@ -443,7 +442,7 @@ const styles = StyleSheet.create({
         rowGap: wp('1%'),
     },
     buttonWrapper: {
-        width: wp('11%'),
+        width: wp('11.5%'),
         height: hp('5%'),
         alignItems: 'center',
         justifyContent: 'center',
