@@ -22,17 +22,7 @@ import BackButton from '../../misc/BackButton';
 import NextButton from '../../misc/NextButton';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-
-const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
-const dpiScale = PixelRatio.get();
-// console.log('dpiScale', dpiScale);
-
-const getResponsivePos = (baseXPercent: number, baseYPercent: number) => {
-    const baseX = screenWidth * (baseXPercent / 100);
-    const baseY = screenHeight * (baseYPercent / 100);
-    const correctionFactor = dpiScale > 2.5 ? 0.5: 0.5;
-    return { x: baseX * correctionFactor, y: baseY * correctionFactor };
-};
+import { getResponsivePos } from '../../misc/responsivePosition';
 
 const visualObjects = [
     {
