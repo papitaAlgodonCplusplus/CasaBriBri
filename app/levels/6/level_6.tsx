@@ -22,7 +22,7 @@ import BackButton from '../../misc/BackButton';
 import NextButton from '../../misc/NextButton';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { getResponsivePos } from '../../misc/responsivePosition';
+import { getResponsivePos, getResponsivePosBack, getResponsivePosNext } from '../../misc/responsivePosition';
 
 
 const bgImage = require('@/assets/images/guia6juego.png');
@@ -243,13 +243,23 @@ const Level6 = ({ navigation }: { navigation: NavigationProp<any> }) => {
           resizeMode={Platform.OS === 'web' ? 'contain' : 'stretch'}
         >
           {/* Back Button */}
-          <View style={styles.buttonsBackContainer}>
+          <View
+            style={[
+              styles.buttonsBackContainer,
+              Platform.OS !== 'web' ? getResponsivePosBack(-17, -5) : {},
+            ]}
+          >
             <BackButton navigation={navigation} />
           </View>
 
           {/* Next Button */}
           {canContinue && (
-            <View style={styles.buttonsNextContainer}>
+            <View
+              style={[
+                styles.buttonsNextContainer,
+                Platform.OS !== 'web' ? getResponsivePosNext(112, 100) : {},
+              ]}
+            >
               <NextButton navigation={navigation} nextName="LevelMapping" />
             </View>
           )}
