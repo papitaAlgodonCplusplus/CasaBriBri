@@ -13,6 +13,9 @@ import {
     Text,
     Animated,
     Easing,
+    Dimensions,
+    Platform,
+    PixelRatio,
 } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import BackButton from '../../misc/BackButton';
@@ -20,16 +23,24 @@ import NextButton from '../../misc/NextButton';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+const dpiScale = PixelRatio.get();
+// console.log('dpiScale', dpiScale);
+
+const getResponsivePos = (baseXPercent: number, baseYPercent: number) => {
+    const baseX = screenWidth * (baseXPercent / 100);
+    const baseY = screenHeight * (baseYPercent / 100);
+    const correctionFactor = dpiScale > 2.5 ? 0.5: 0.5;
+    return { x: baseX * correctionFactor, y: baseY * correctionFactor };
+};
+
 const visualObjects = [
     {
         id: 1,
         name: 'obj_chane',
         imageNormal: require('@/assets/images/chane_normal.png'),
         imageSelected: require('@/assets/images/chane_sombra.png'),
-        position: { 
-            x: wp('45%'),
-            y: hp('0%')
-        },
+        position: Platform.OS === 'web' ? { x: wp('45%'), y: hp('1%') } : getResponsivePos(92, 2),
         size: {
             normal: { width: wp('25%'), height: hp('30%') },
             selected: { width: wp('25%'), height: hp('32%') }
@@ -41,10 +52,7 @@ const visualObjects = [
         name: 'obj_tiska',
         imageNormal: require('@/assets/images/tiska_normal.png'),
         imageSelected: require('@/assets/images/tiska_sombra.png'),
-        position: { 
-            x: wp('57%'),
-            y: hp('56%')
-        },
+        position: Platform.OS === 'web' ? { x: wp('58%'), y: hp('55%') } : getResponsivePos(119, 109),
         size: {
             normal: { width: wp('24%'), height: hp('35%') },
             selected: { width: wp('24%'), height: hp('36%') }
@@ -56,10 +64,7 @@ const visualObjects = [
         name: 'obj_kowolo',
         imageNormal: require('@/assets/images/kowolo2_normal.png'),
         imageSelected: require('@/assets/images/kowolo2_sombra.png'),
-        position: { 
-            x: wp('60%'),
-            y: hp('40%')
-        },
+        position: Platform.OS === 'web' ? { x: wp('58%'), y: hp('39%') } : getResponsivePos(120, 77),
         size: {
             normal: { width: wp('18%'), height: hp('21%') },
             selected: { width: wp('18%'), height: hp('23%') }
@@ -71,10 +76,7 @@ const visualObjects = [
         name: 'obj_klowok',
         imageNormal: require('@/assets/images/ko_klowok_normal.png'),
         imageSelected: require('@/assets/images/ko_klowok_sombra.png'),
-        position: { 
-            x: wp('57%'),
-            y: hp('19%')
-        },
+        position: Platform.OS === 'web' ? { x: wp('56%'), y: hp('17%') } : getResponsivePos(116, 35),
         size: {
             normal: { width: wp('20%'), height: hp('26%') },
             selected: { width: wp('21%'), height: hp('28%') }
@@ -234,7 +236,8 @@ const Level5 = ({ navigation }: { navigation: NavigationProp<any> }) => {
                 <ImageBackground
                     source={require('../../../assets/images/guia5juego.png')}
                     style={styles.backgroundImage}
-                    resizeMode="contain"
+                    // resizeMode="contain"
+                    resizeMode={Platform.OS === 'web' ? 'contain' : 'stretch'}
                 >
                     {/* Back Button */}
                     <View style={styles.buttonsBackContainer}>
@@ -333,7 +336,7 @@ const styles = StyleSheet.create({
     },
     backgroundImage: {
         alignSelf: 'center',
-        width: wp('80%'),
+        width: wp('75%'),
         height: hp('100%'),
     },
     buttonsBackContainer: {

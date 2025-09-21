@@ -40,7 +40,7 @@ const visualObjects = [
         name: 'obj_tso_klowok',
         imageNormal: require('@/assets/images/tso_klowok_normal.png'),
         imageSelected: require('@/assets/images/tso_klowok_sombra.png'),
-        position: Platform.OS === 'web' ? { x: wp('3%'), y: hp('50%') } : getResponsivePos(4, 102),
+        position: Platform.OS === 'web' ? { x: wp('2%'), y: hp('51%') } : getResponsivePos(4, 102),
         size: {
             normal: { width: wp('21%'), height: hp('23%') },
             selected: { width: wp('20%'), height: hp('24%') }
@@ -64,7 +64,7 @@ const visualObjects = [
         name: 'obj_tso',
         imageNormal: require('@/assets/images/tso_normal.png'),
         imageSelected: require('@/assets/images/tso_sombra.png'),
-        position: Platform.OS === 'web' ? { x: wp('65%'), y: hp('25%') } : getResponsivePos(131, 49),
+        position: Platform.OS === 'web' ? { x: wp('65%'), y: hp('24%') } : getResponsivePos(131, 49),
         size: {
             normal: { width: wp('20%'), height: hp('15%') },
             selected: { width: wp('20%'), height: hp('18%') }
@@ -88,7 +88,7 @@ const visualObjects = [
         name: 'obj_nak_kata',
         imageNormal: require('@/assets/images/nak_kata_normal.png'),
         imageSelected: require('@/assets/images/nak_kata_sombra.png'),
-        position: Platform.OS === 'web' ? { x: wp('51%'), y: hp('68%') } : getResponsivePos(101, 135),
+        position: Platform.OS === 'web' ? { x: wp('51%'), y: hp('67%') } : getResponsivePos(101, 135),
         size: {
             normal: { width: wp('24%'), height: hp('20%') },
             selected: { width: wp('24%'), height: hp('21%') }
@@ -112,7 +112,7 @@ const visualObjects = [
         name: 'obj_seukuo',
         imageNormal: require('@/assets/images/seukuo_normal.png'),
         imageSelected: require('@/assets/images/seukuo_sombra.png'),
-        position: Platform.OS === 'web' ? { x: wp('30%'), y: hp('84%') } : getResponsivePos(59, 168),
+        position: Platform.OS === 'web' ? { x: wp('29.5%'), y: hp('85%') } : getResponsivePos(59, 168),
         size: {
             normal: { width: wp('20%'), height: hp('14%') },
             selected: { width: wp('20%'), height: hp('15%') }
