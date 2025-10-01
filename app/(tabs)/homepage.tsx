@@ -8,6 +8,7 @@ import {
   Easing,
   Linking,
   Modal,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -380,7 +381,7 @@ const HomePage = ({ navigation }: { navigation: NavigationProp<any> }) => {
         <Image
           source={require('@/assets/images/pantalla_principal.png')}
           style={styles.backgroundImage}
-          resizeMode="stretch"
+          resizeMode={Platform.OS === 'web' ? 'stretch' : 'stretch'}
         />
 
         {/* Manual Button */}
@@ -724,7 +725,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
-  backgroundImage: {
+  backgroundImage: Platform.OS === 'web' ? {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    zIndex: -1,
+  } : {
     width: wp('100%'),
     height: hp('100%'),
     transform: [{ translateY: -hp('3%') }],
