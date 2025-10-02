@@ -7,6 +7,7 @@ import {
   ScrollView,
   Text,
   Animated,
+  Platform,
   Easing
 } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -330,6 +331,7 @@ const LevelMapping = ({ navigation }: { navigation: NavigationProp<any> }) => {
           <Image
             source={require('@/assets/images/pantalla_nivel_modo.jpg')}
             style={styles.backgroundImage}
+            resizeMode={Platform.OS === 'web' ? 'stretch' : 'stretch'}
           />
 
           {/* Stars Progress Display */}
@@ -470,10 +472,18 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: 'stretch',
   },
-  backgroundImage: {
+  backgroundImage: Platform.OS === 'web' ? {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    zIndex: -1,
+  } : {
     ...StyleSheet.absoluteFillObject,
     width: wp('100%'),
     height: hp('100%'),
+    // transform: [{ translateY: -hp('3%') }],
   },
   // Contenedor central que centra el contenido (botones o niveles)
   content: {
