@@ -385,14 +385,14 @@ const HomePage = ({ navigation }: { navigation: NavigationProp<any> }) => {
         />
 
         {/* Manual Button */}
-        <TouchableOpacity onPress={handleManualPreview} style={styles.manualButton}>
+        {/* <TouchableOpacity onPress={handleManualPreview} style={styles.manualButton}>
           <Text style={styles.manualButtonText}>📖</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         {/* Intonation Guide Button */}
-        <TouchableOpacity onPress={handleIntonationGuide} style={styles.intonationButton}>
+        {/* <TouchableOpacity onPress={handleIntonationGuide} style={styles.intonationButton}>
           <Text style={styles.intonationButtonText}>🎵</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         {/* Settings Button */}
         <TouchableOpacity onPress={handleSettings} style={styles.settingsButton}>
