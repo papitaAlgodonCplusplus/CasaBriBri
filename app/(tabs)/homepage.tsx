@@ -383,16 +383,6 @@ const HomePage = ({ navigation }: { navigation: NavigationProp<any> }) => {
           resizeMode="stretch"
         />
 
-        {/* Manual Button */}
-        <TouchableOpacity onPress={handleManualPreview} style={styles.manualButton}>
-          <Text style={styles.manualButtonText}>📖</Text>
-        </TouchableOpacity>
-
-        {/* Intonation Guide Button */}
-        <TouchableOpacity onPress={handleIntonationGuide} style={styles.intonationButton}>
-          <Text style={styles.intonationButtonText}>🎵</Text>
-        </TouchableOpacity>
-
         {/* Settings Button */}
         <TouchableOpacity onPress={handleSettings} style={styles.settingsButton}>
           {/* Settings button highlight during tutorial */}
@@ -404,11 +394,6 @@ const HomePage = ({ navigation }: { navigation: NavigationProp<any> }) => {
               ]}
             />
           )}
-          <Image
-            source={require('@/assets/images/toucan_idle.png')}
-            style={styles.settingsIcon}
-            resizeMode="contain"
-          />
         </TouchableOpacity>
 
         {/* Toucan Guide with animated position */}
@@ -639,6 +624,11 @@ const HomePage = ({ navigation }: { navigation: NavigationProp<any> }) => {
 
         {/* Contenedor inferior */}
         <View style={styles.bottomContainer}>
+          <Image
+            source={require('@/assets/images/toucan_idle.png')}
+            style={styles.settingsIcon}
+            resizeMode="contain"
+          />
           <Image
             source={require('@/assets/images/button.png')}
             style={styles.buttonImageBottom}
@@ -931,6 +921,9 @@ const styles = StyleSheet.create({
     color: '#8B4513',
   },
   settingsIcon: {
+    position: 'absolute',
+    top: -wp('1%'),
+    left: -wp('5%'),
     width: wp('12%'),
     height: hp('12%'),
   },
