@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { ImageBackground, StyleSheet, View, TouchableOpacity } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import BackButton from '@/app/misc/BackButton';
 import NextButton from '@/app/misc/NextButton';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationProp } from '@react-navigation/native';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import React, { useEffect, useState } from 'react';
+import { ImageBackground, Platform, StyleSheet, View } from 'react-native';
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 const Guide = ({ navigation }: { navigation: NavigationProp<any> }) => {
@@ -46,21 +46,25 @@ const styles: { [key: string]: any } = StyleSheet.create({
           justifyContent: 'center',
           backgroundColor: '#ffff',
       },
-      bgImage: {
+      bgImage: Platform.OS === 'web' ? {
+        flex: 1,
+        width: wp('80%'),
+        height: hp('90%'),
+      } : {
         flex: 1,
         width: wp('80%'),
         height: hp('90%'),
       },
       buttonsBackContainer: {
         position: 'absolute',
-        top: hp('-4%'),
-        left: wp('-7%'),
+        top: hp('-3%'),
+        left: wp('-8%'),
         resizeMode: 'cover',
     },
     buttonsNextContainer: {
         position: 'absolute',
         bottom: hp('-1%'),
-        right: wp('-5%'),
+        right: wp('-6%'),
     }
 });
 
