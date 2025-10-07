@@ -47,24 +47,35 @@ const styles: { [key: string]: any } = StyleSheet.create({
           backgroundColor: '#ffff',
       },
       bgImage: Platform.OS === 'web' ? {
-        flex: 1,
+        flex: 2,
         width: wp('80%'),
         height: hp('90%'),
+        // top: 100,
+        marginTop: 105,
       } : {
         flex: 1,
         width: wp('80%'),
         height: hp('90%'),
       },
-      buttonsBackContainer: {
+      buttonsBackContainer: Platform.OS === 'web' ? {
         position: 'absolute',
-        top: hp('-3%'),
+        top: hp('-12%'),
         left: wp('-8%'),
         resizeMode: 'cover',
+    } : {
+      position: 'absolute',
+      top: hp('-3%'),
+      left: wp('-8%'),
+      resizeMode: 'cover',
     },
-    buttonsNextContainer: {
+    buttonsNextContainer:  Platform.OS === 'web' ? {
         position: 'absolute',
-        bottom: hp('-1%'),
+        bottom: hp('6%'),
         right: wp('-6%'),
+    } : {
+      position: 'absolute',
+      bottom: hp('-5%'),
+      right: wp('-6%'),
     }
 });
 
