@@ -344,12 +344,12 @@ const styles = StyleSheet.create({
   },
   buttonsBackContainer: {
     bottom: hp('53%'),
-    right: wp('3%'),
+    right: wp('-2%'),
     zIndex: 5,
   },
   buttonsNextContainer: {
-    top: hp('47.5%'),
-    left: wp('1.2%'),
+    top: hp('50.5%'),
+    left: wp('-4%'),
     zIndex: 5,
   },
   button: {
