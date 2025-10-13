@@ -247,14 +247,14 @@ const styles = StyleSheet.create({
     },
     buttonsBackContainer: {
         position: 'absolute',
-        top: hp('-4%'),
-        left: wp('-7%'),
+        top: hp('-3%'),
+        left: wp('-8%'),
         resizeMode: 'cover',
     },
     buttonsNextContainer: {
         position: 'absolute',
         bottom: hp('-1%'),
-        right: wp('-5%'),
+        right: wp('-6%'),
     }
 });
 
