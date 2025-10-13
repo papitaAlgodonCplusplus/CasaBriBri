@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { ImageBackground, StyleSheet, View, TouchableOpacity, Image } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import BackButton from '@/app/misc/BackButton';
 import NextButton from '@/app/misc/NextButton';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationProp } from '@react-navigation/native';
 import { Audio } from 'expo-av';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import React, { useEffect, useState } from 'react';
+import { Image, ImageBackground, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 const Guide7Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
@@ -82,9 +82,9 @@ const Guide7Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
             name: 'obj_ajko_ko', 
             style: {
                 position: 'absolute',
-                left: wp('10%'),
-                top: hp('90%'),
-                width: wp('7%'),
+                left: wp('9%'),
+                top: hp('91%'),
+                width: wp('5%'),
                 height: hp('5%'),
                 borderWidth: 3,
                 borderColor: '#0046e3',
@@ -99,9 +99,9 @@ const Guide7Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
             name: 'obj_sabak_dule', 
             style: {
                 position: 'absolute',
-                left: wp('32%'),
-                top: hp('90%'),
-                width: wp('10%'),
+                left: wp('33%'),
+                top: hp('91%'),
+                width: wp('5%'),
                 height: hp('5%'),
                 borderWidth: 3,
                 borderColor: '#603f91',
@@ -116,9 +116,9 @@ const Guide7Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
             name: 'obj_kula', 
             style: {
                 position: 'absolute',
-                left: wp('62%'),
-                top: hp('90%'),
-                width: wp('7%'),
+                left: wp('64%'),
+                top: hp('91%'),
+                width: wp('5%'),
                 height: hp('5%'),
                 borderWidth: 3,
                 borderColor: '#e6175c',
@@ -133,9 +133,9 @@ const Guide7Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
             name: 'obj_to_ta', 
             style: {
                 position: 'absolute',
-                left: wp('67%'),
+                left: wp('69%'),
                 top: hp('48%'),
-                width: wp('7%'),
+                width: wp('5%'),
                 height: hp('5%'),
                 borderWidth: 3,
                 borderColor: '#d92a73',
@@ -168,8 +168,8 @@ const Guide7Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
             style: {
                 position: 'absolute',
                 left: wp('21%'),
-                top: hp('90%'),
-                width: wp('7%'),
+                top: hp('91%'),
+                width: wp('5%'),
                 height: hp('5%'),
                 borderWidth: 3,
                 borderColor: '#e4191c',
@@ -184,9 +184,9 @@ const Guide7Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
             name: 'obj_kule', 
             style: {
                 position: 'absolute',
-                left: wp('45%'),
-                top: hp('90%'),
-                width: wp('7%'),
+                left: wp('46%'),
+                top: hp('91%'),
+                width: wp('5%'),
                 height: hp('5%'),
                 borderWidth: 3,
                 borderColor: '#ede430',
@@ -217,10 +217,10 @@ const Guide7Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
             id: 9, 
             name: 'obj_tcho_tka', 
             style: {
-                position: 'absolute',
-                left: wp('60%'),
+                position: 'absolute', 
+                left: wp('62%'),
                 top: hp('32%'),
-                width: wp('9%'),
+                width: wp('5%'),
                 height: hp('5%'),
                 borderWidth: 3,
                 borderColor: '#68e033',
@@ -235,8 +235,8 @@ const Guide7Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
             name: 'obj_u', 
             style: {
                 position: 'absolute',
-                left: wp('27%'),
-                top: hp('-5%'),
+                left: wp('28%'),
+                top: hp('16%'),
                 width: wp('5%'),
                 height: hp('5%'),
                 borderWidth: 3,
@@ -308,7 +308,7 @@ const styles = StyleSheet.create({
     },
     audioIcon: {
         width: wp('8%'),
-        height: hp('4%'),
+        height: hp('3%'),
         resizeMode: 'contain',
     },
     buttonsBackContainer: {
