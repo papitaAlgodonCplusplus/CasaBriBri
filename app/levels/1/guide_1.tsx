@@ -338,9 +338,9 @@ const styles = StyleSheet.create({
   bgImage: {
     position: 'absolute',
     alignSelf: 'center',
-    width: wp('100%'),
-    height: hp('135%'),
-    top: hp('-23%'),
+    width: wp('75%'),
+    height: hp('100%'),
+    // top: hp('-23%'),
   },
   buttonsBackContainer: {
     bottom: hp('53%'),

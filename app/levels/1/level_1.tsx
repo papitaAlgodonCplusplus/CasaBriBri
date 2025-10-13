@@ -5,7 +5,7 @@ import { Image } from "expo-image";
 import React, { useEffect, useRef, useState } from 'react';
 import {
     Animated,
-    Easing, ImageBackground, LogBox, StyleSheet, Text, TouchableOpacity, View
+    Easing, ImageBackground, LogBox, StyleSheet, Text, TouchableOpacity, View, Platform
 } from 'react-native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
@@ -15,6 +15,8 @@ import NextButton from '../../misc/NextButton';
 import { LevelMode } from '../../misc/progress';
 import { recordWordAttempt } from '../../misc/wordPracticeTracker'; // Import tracking function
 import LevelCompleteModal from '../../screens/LevelCompleteModal';
+import { getResponsivePos } from '../../misc/responsivePosition';
+
 LogBox.ignoreLogs([
     'Draggable: Support for defaultProps will be removed'
 ]);
@@ -24,12 +26,9 @@ const visualObjects = [
     {
         id: 1,
         name: 'obj_ale',
-        imageNormal: require('@/assets/images/ale_normal.png'),
+        imageNormal: require('@/assets/images/ale_normal.png'), 
         imageSelected: require('@/assets/images/ale_sombra.png'),
-        position: {
-            x: wp('15%'),
-            y: hp('42%')
-        },
+        position: Platform.OS === 'web' ? { x: wp('3%'), y: hp('7%') } : getResponsivePos(6, 19),
         size: {
             normal: { width: wp('20%'), height: hp('12%') },
             selected: { width: wp('20%'), height: hp('15%') }
@@ -41,10 +40,7 @@ const visualObjects = [
         name: 'obj_nolo_nkuo',
         imageNormal: require('@/assets/images/nolo_kuo_normal.png'),
         imageSelected: require('@/assets/images/nolo_kuo_sombra.png'),
-        position: {
-            x: wp('3%'),
-            y: hp('104%')
-        },
+        position: Platform.OS === 'web' ? { x: wp('2%'), y: hp('19%') } : getResponsivePos(4, 43),
         size: {
             normal: { width: wp('24%'), height: hp('15%') },
             selected: { width: wp('24%'), height: hp('16%') }
@@ -56,10 +52,7 @@ const visualObjects = [
         name: 'obj_kapo',
         imageNormal: require('@/assets/images/kapo_normal.png'),
         imageSelected: require('@/assets/images/kapo_sombra.png'),
-        position: {
-            x: wp('52%'),
-            y: hp('96%')
-        },
+        position: Platform.OS === 'web' ? { x: wp('5%'), y: hp('33%') } : getResponsivePos(12, 65),
         size: {
             normal: { width: wp('18%'), height: hp('11%') },
             selected: { width: wp('18%'), height: hp('12%') }
@@ -71,10 +64,7 @@ const visualObjects = [
         name: 'obj_nolo_kibi',
         imageNormal: require('@/assets/images/nolo_kibi_normal.png'),
         imageSelected: require('@/assets/images/nolo_kibi_sombra.png'),
-        position: {
-            x: wp('38%'),
-            y: hp('103%')
-        },
+        position: Platform.OS === 'web' ? { x: wp('0%'), y: hp('57%') } : getResponsivePos(-1, 109),
         size: {
             normal: { width: wp('20%'), height: hp('12%') },
             selected: { width: wp('21%'), height: hp('14%') }
@@ -494,9 +484,10 @@ const Level1 = ({ navigation }: { navigation: NavigationProp<any> }) => {
         <SafeAreaProvider>
             <SafeAreaView style={styles.container}>
                 <ImageBackground
-                    source={require('../../../assets/images/guia1juego.png')}
+                    source={require('../../../assets/images/guia1juego1.png')}
                     style={styles.backgroundImage}
-                    resizeMode="contain"
+                    // resizeMode="contain"
+                    resizeMode={Platform.OS === 'web' ? 'contain' : 'stretch'}
                 >
                     {/* Back Button */}
                     <View style={styles.buttonsBackContainer}>
@@ -647,18 +638,18 @@ const styles = StyleSheet.create({
     },
     bgImage: {
         alignSelf: 'center',
-        width: wp('80%'),
+        width: wp('70%'),
         height: hp('100%'),
     },
     buttonsBackContainer: {
         position: 'absolute',
-        top: hp('-2%'),
+        top: hp('-1%'),
         left: wp('-8%'),
         zIndex: 1,
     },
     buttonsNextContainer: {
         position: 'absolute',
-        bottom: hp('-0%'),
+        bottom: hp('-3%'),
         right: wp('-6%'),
         zIndex: 1,
     },
@@ -703,13 +694,13 @@ const styles = StyleSheet.create({
     },
     backgroundImage: {
         alignSelf: 'center',
-        width: wp('100%'),
-        height: hp('135%'),
+        width: wp('80%'),
+        height: hp('100%'),
         top: hp('-2%'),
     },
     buttonsContainer: {
         position: 'absolute',
-        top: hp('30%'),
+        top: hp('82%'),
         left: wp('2%'),
         width: wp('25%'),
         flexDirection: 'row',
