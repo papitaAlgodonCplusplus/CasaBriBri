@@ -46,7 +46,7 @@ const dropZones = [
         id: 3,
         name: 'obj_tso',
         position: { 
-            x: wp('73%'),
+            x: wp('74%'),
             y: hp('28%')
         },
         size: {
@@ -91,7 +91,7 @@ const dropZones = [
         id: 6,
         name: 'obj_se',
         position: { 
-            x: wp('16%'),
+            x: wp('15%'),
             y: hp('61%')
         },
         size: {
@@ -106,7 +106,7 @@ const dropZones = [
         id: 7,
         name: 'obj_seukuo',
         position: { 
-            x: wp('39%'),
+            x: wp('38.7%'),
             y: hp('90%')
         },
         size: {
@@ -136,7 +136,7 @@ const dropZones = [
         id: 9,
         name: 'obj_chamulikata',
         position: { 
-            x: wp('14%'),
+            x: wp('13%'),
             y: hp('86%')
         },
         size: {

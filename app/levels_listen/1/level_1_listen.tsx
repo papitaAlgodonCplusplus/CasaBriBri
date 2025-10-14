@@ -344,7 +344,7 @@ const Level1Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
                   backgroundColor: matches[zone.name] ? zone.backgroundColor : 'rgba(255, 255, 255, 0.1)',
                   justifyContent: 'center',
                   alignItems: 'center',
-                  borderRadius: 5,
+                  borderRadius: 0,
                   opacity: 0.9,
                 }}
               >

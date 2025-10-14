@@ -46,7 +46,7 @@ const dropZones = [
         id: 3,
         name: 'obj_kowolo',
         position: { 
-            x: wp('66.9%'),
+            x: wp('66.7%'),
             y: hp('43%')
         },
         size: {

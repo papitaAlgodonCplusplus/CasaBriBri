@@ -31,7 +31,7 @@ const dropZones = [
         id: 2,
         name: 'obj_kokata',
         position: { 
-            x: wp('55%'), // 52% + 10%
+            x: wp('54.7%'), // 52% + 10%
             y: hp('68%')
         },
         size: {
@@ -46,7 +46,7 @@ const dropZones = [
         id: 3,
         name: 'obj_kowolo',
         position: { 
-            x: wp('61%'), // 55% + 10%
+            x: wp('61.2%'), // 55% + 10%
             y: hp('24%')
         },
         size: {

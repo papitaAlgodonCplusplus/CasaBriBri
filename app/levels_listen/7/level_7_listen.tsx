@@ -46,7 +46,7 @@ const dropZones = [
         id: 3,
         name: 'obj_kula',
         position: { 
-            x: wp('60%'), // x + 4
+            x: wp('62.8%'), // x + 4
             y: hp('67%') // y + 3
         },
         size: {
@@ -61,7 +61,7 @@ const dropZones = [
         id: 4,
         name: 'obj_to_ta',
         position: { 
-            x: wp('61.5%'), // x + 4
+            x: wp('62.7%'), // x + 4
             y: hp('32%') // y + 3
         },
         size: {
@@ -106,7 +106,7 @@ const dropZones = [
         id: 7,
         name: 'obj_kule',
         position: { 
-            x: wp('45%'), // x + 4
+            x: wp('45.5%'), // x + 4
             y: hp('67%') // y + 3
         },
         size: {
@@ -121,7 +121,7 @@ const dropZones = [
         id: 8,
         name: 'obj_skou',
         position: { 
-            x: wp('62.4%'), // x + 4
+            x: wp('63.7%'), // x + 4
             y: hp('43%') // y + 3
         },
         size: {

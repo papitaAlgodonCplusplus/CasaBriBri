@@ -17,7 +17,7 @@ const dropZones = [
         name: 'obj_u_tto',
         position: { 
             x: wp('9%'),
-            y: hp('60%')
+            y: hp('59.9%')
         },
         size: {
             width: wp('6%'),
@@ -32,7 +32,7 @@ const dropZones = [
         name: 'obj_uko',
         position: { 
             x: wp('65.4%'),
-            y: hp('67%')
+            y: hp('68%')
         },
         size: {
             width: wp('6%'),
@@ -62,7 +62,7 @@ const dropZones = [
         name: 'obj_u_tsi',
         position: { 
             x: wp('50%'),
-            y: hp('61%')
+            y: hp('62.5%')
         },
         size: {
             width: wp('6%'),
