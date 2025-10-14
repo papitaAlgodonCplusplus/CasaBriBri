@@ -67,7 +67,7 @@ const Guide6Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
             name: 'obj_iwo', 
             style: {
                 position: 'absolute',
-                left: wp('18%'),
+                left: wp('17%'),
                 top: hp('71%'), // y + 10
                 width: wp('5%'),
                 height: hp('6%'),
@@ -84,9 +84,9 @@ const Guide6Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
             name: 'obj_kapokwa', 
             style: {
                 position: 'absolute',
-                left: hp('126.5%'),
+                left: hp('125%'),
                 top: hp('40%'), // y + 10
-                width: wp('7%'),
+                width: wp('5%'),
                 height: hp('6%'),
                 borderWidth: 3,
                 borderColor: '#ede430',
@@ -102,8 +102,8 @@ const Guide6Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
             style: {
                 position: 'absolute',
                 left: wp('12.3%'),
-                top: hp('46%'), // y + 10
-                width: wp('8%'),
+                top: hp('35%'), // y + 10
+                width: wp('5%'),
                 height: hp('6%'),
                 borderWidth: 3,
                 borderColor: '#0046e3',
@@ -120,7 +120,7 @@ const Guide6Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
                 position: 'absolute',
                 left: wp('33%'),
                 top: hp('53%'), // y + 10
-                width: wp('6%'),
+                width: wp('5%'),
                 height: hp('6%'),
                 borderWidth: 3,
                 borderColor: '#603f91',
@@ -152,9 +152,9 @@ const Guide6Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
             name: 'obj_ko', 
             style: {
                 position: 'absolute',
-                left: wp('60%'),
-                top: hp('20%'), // y + 10
-                width: wp('6%'),
+                left: wp('67%'),
+                top: hp('14%'), // y + 10
+                width: wp('5%'),
                 height: hp('6%'),
                 borderWidth: 3,
                 borderColor: '#e6175c',
@@ -171,7 +171,7 @@ const Guide6Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
                 position: 'absolute',
                 left: wp('56.5%'),
                 top: hp('1%'), // y + 10
-                width: wp('6%'),
+                width: wp('5%'),
                 height: hp('6%'),
                 borderWidth: 3,
                 borderColor: '#e94d1f',
@@ -242,19 +242,19 @@ const styles = StyleSheet.create({
     },
     audioIcon: {
         width: wp('8%'),
-        height: hp('4%'),
+        height: hp('3%'),
         resizeMode: 'contain',
     },
     buttonsBackContainer: {
         position: 'absolute',
-        top: hp('-4%'),
-        left: wp('-7%'),
+        top: hp('-3%'),
+        left: wp('-8%'),
         resizeMode: 'cover',
     },
     buttonsNextContainer: {
         position: 'absolute',
         bottom: hp('-1%'),
-        right: wp('-5%'),
+        right: wp('-6%'),
     }
 });
 

@@ -33,21 +33,21 @@ const Guide3Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
             name: 'uko',
             audio: require('@/assets/audios/uko.wav'),
         },
-        {
-            id: 3,
-            name: 'u_tso_pabakok',
-            audio: require('@/assets/audios/utsi.wav'),
-        },
+        // {
+        //     id: 3,
+        //     name: 'u_tso_pabakok',
+        //     audio: require('@/assets/audios/utsi.wav'), //  Audio no disponible
+        // },
         {
             id: 4,
             name: 'u_tsi',
             audio: require('@/assets/audios/utsi.wav'),
         },
-        {
-            id: 5,
-            name: 'pabakok',
-            audio: require('@/assets/audios/utsi.wav'),
-        },
+        // {
+        //     id: 5,
+        //     name: 'pabakok',
+        //     audio: require('@/assets/audios/utsi.wav'), // Audio no disponible
+        // },
         {
             id: 6,
             name: 'etsok',
@@ -61,10 +61,10 @@ const Guide3Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
             name: 'obj_u_tto', 
             style: {
                 position: 'absolute',
-                left: wp('6.5%'),
+                left: wp('4%'),
                 top: hp('71%'),
                 width: wp('5%'),
-                height: hp('5%'),
+                height: hp('6%'),
                 borderWidth: 3,
                 borderColor: '#e4191c',
                 backgroundColor: 'rgba(228, 25, 28, 0.3)',
@@ -78,10 +78,10 @@ const Guide3Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
             name: 'obj_uko', 
             style: {
                 position: 'absolute',
-                left: wp('65%'),
+                left: wp('72%'),
                 top: hp('50.5%'),
                 width: wp('5%'),
-                height: hp('5%'),
+                height: hp('6%'),
                 borderWidth: 3,
                 borderColor: '#e94d1f',
                 backgroundColor: 'rgba(233, 77, 31, 0.3)',
@@ -90,23 +90,23 @@ const Guide3Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
             },
             audioName: 'uko'
         },
-        { 
-            id: 3, 
-            name: 'obj_u_tso_pabakok', 
-            style: {
-                position: 'absolute',
-                left: wp('56%'),
-                top: hp('14%'),
-                width: wp('15%'),
-                height: hp('5%'),
-                borderWidth: 3,
-                borderColor: '#0046e3',
-                backgroundColor: 'rgba(0, 70, 227, 0.3)',
-                justifyContent: 'center',
-                alignItems: 'center',
-            },
-            audioName: 'u_tso_pabakok'
-        },
+        // { 
+        //     id: 3, 
+        //     name: 'obj_u_tso_pabakok', 
+        //     style: {
+        //         position: 'absolute',
+        //         left: wp('59%'),
+        //         top: hp('14%'),
+        //         width: wp('5%'),
+        //         height: hp('6%'),
+        //         borderWidth: 3,
+        //         borderColor: '#0046e3',
+        //         backgroundColor: 'rgba(0, 70, 227, 0.3)',
+        //         justifyContent: 'center',
+        //         alignItems: 'center',
+        //     },
+        //     audioName: 'u_tso_pabakok'
+        // },
         { 
             id: 4, 
             name: 'obj_u_tsi', 
@@ -115,7 +115,7 @@ const Guide3Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
                 left: wp('48.5%'),
                 top: hp('78%'),
                 width: wp('5%'),
-                height: hp('5%'),
+                height: hp('6%'),
                 borderWidth: 3,
                 borderColor: '#e6175c',
                 backgroundColor: 'rgba(230, 23, 92, 0.3)',
@@ -124,32 +124,32 @@ const Guide3Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
             },
             audioName: 'u_tsi'
         },
-        { 
-            id: 5, 
-            name: 'obj_pabakok', 
-            style: {
-                position: 'absolute',
-                left: wp('29%'),
-                top: hp('29%'),
-                width: wp('15%'),
-                height: hp('5%'),
-                borderWidth: 3,
-                borderColor: '#ede430',
-                backgroundColor: 'rgba(237, 228, 48, 0.3)',
-                justifyContent: 'center',
-                alignItems: 'center',
-            },
-            audioName: 'pabakok'
-        },
+        // { 
+        //     id: 5, 
+        //     name: 'obj_pabakok', 
+        //     style: {
+        //         position: 'absolute',
+        //         left: wp('78%'),
+        //         top: hp('34%'),
+        //         width: wp('5%'),
+        //         height: hp('6%'),
+        //         borderWidth: 3,
+        //         borderColor: '#ede430',
+        //         backgroundColor: 'rgba(237, 228, 48, 0.3)',
+        //         justifyContent: 'center',
+        //         alignItems: 'center',
+        //     },
+        //     audioName: 'pabakok'
+        // },
         { 
             id: 6, 
             name: 'obj_etsok', 
             style: {
                 position: 'absolute',
-                left: wp('65%'),
-                top: hp('40%'),
-                width: wp('8%'),
-                height: hp('5%'),
+                left: wp('30%'),
+                top: hp('29%'),
+                width: wp('5%'),
+                height: hp('6%'),
                 borderWidth: 3,
                 borderColor: '#68e033',
                 backgroundColor: 'rgba(104, 224, 51, 0.3)',
@@ -219,19 +219,19 @@ const styles = StyleSheet.create({
     },
     audioIcon: {
         width: wp('8%'),
-        height: hp('4%'),
+        height: hp('3%'),
         resizeMode: 'contain',
     },
     buttonsBackContainer: {
         position: 'absolute',
-        top: hp('-4%'),
-        left: wp('-7%'),
+        top: hp('-3%'),
+        left: wp('-8%'),
         resizeMode: 'cover',
     },
     buttonsNextContainer: {
         position: 'absolute',
         bottom: hp('-1%'),
-        right: wp('-5%'),
+        right: wp('-6%'),
     }
 });
 

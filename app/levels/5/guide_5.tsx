@@ -50,18 +50,18 @@ const styles: { [key: string]: any } = StyleSheet.create({
         flex: 1,
         width: wp('100%'),
         height: hp('115%'),
-        right: wp('4%'),
+        right: wp('7%'),
       },
       buttonsBackContainer: {
         position: 'absolute',
-        top: hp('0%'),
-        left: wp('0%'),
+        top: hp('-3%'),
+        left: wp('9%'),
         resizeMode: 'cover',
     },
     buttonsNextContainer: {
         position: 'absolute',
-        bottom: hp('0%'),
-        right: wp('0%'),
+        bottom: hp('-1%'),
+        right: wp('-3%'),
     }
 });
 

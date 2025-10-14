@@ -43,21 +43,21 @@ const dropZones = [
         backgroundColor: 'rgba(233, 77, 31, 0.3)',
         matchName: 'uko'
     },
-    {
-        id: 3,
-        name: 'obj_u_tso_pabakok',
-        position: { 
-            x: wp('70%'),
-            y: hp('29%')
-        },
-        size: {
-            width: wp('6%'),
-            height: hp('6%')
-        },
-        borderColor: '#0046e3',
-        backgroundColor: 'rgba(0, 70, 227, 0.3)',
-        matchName: 'u_tso_pabakok'
-    },
+    // {
+    //     id: 3,
+    //     name: 'obj_u_tso_pabakok',
+    //     position: { 
+    //         x: wp('70%'),
+    //         y: hp('29%')
+    //     },
+    //     size: {
+    //         width: wp('6%'),
+    //         height: hp('6%')
+    //     },
+    //     borderColor: '#0046e3',
+    //     backgroundColor: 'rgba(0, 70, 227, 0.3)',
+    //     matchName: 'u_tso_pabakok'
+    // },
     {
         id: 4,
         name: 'obj_u_tsi',
@@ -73,21 +73,21 @@ const dropZones = [
         backgroundColor: 'rgba(230, 23, 92, 0.3)',
         matchName: 'u_tsi'
     },
-    {
-        id: 5,
-        name: 'obj_pabakok',
-        position: { 
-            x: wp('32%'),
-            y: hp('17%')
-        },
-        size: {
-            width: wp('6%'),
-            height: hp('6%')
-        },
-        borderColor: '#ede430',
-        backgroundColor: 'rgba(237, 228, 48, 0.3)',
-        matchName: 'pabakok'
-    },
+    // {
+    //     id: 5,
+    //     name: 'obj_pabakok',
+    //     position: { 
+    //         x: wp('32%'),
+    //         y: hp('17%')
+    //     },
+    //     size: {
+    //         width: wp('6%'),
+    //         height: hp('6%')
+    //     },
+    //     borderColor: '#ede430',
+    //     backgroundColor: 'rgba(237, 228, 48, 0.3)',
+    //     matchName: 'pabakok'
+    // },
     {
         id: 6,
         name: 'obj_etsok',
@@ -117,21 +117,21 @@ const draggableElements = [
         name: 'uko',
         audio: require('@/assets/audios/uko.wav')
     },
+    // {
+    //     id: 3,
+    //     name: 'u_tso_pabakok',
+    //     audio: require('@/assets/audios/utsi.wav')
+    // },
     {
         id: 3,
-        name: 'u_tso_pabakok',
-        audio: require('@/assets/audios/utsi.wav')
-    },
-    {
-        id: 4,
         name: 'u_tsi',
         audio: require('@/assets/audios/utsi.wav')
     },
-    {
-        id: 5,
-        name: 'pabakok',
-        audio: require('@/assets/audios/utsi.wav')
-    },
+    // {
+    //     id: 5,
+    //     name: 'pabakok',
+    //     audio: require('@/assets/audios/utsi.wav')
+    // },
     {
         id: 6,
         name: 'etsok',
@@ -372,7 +372,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: hp('9%'),
         left: wp('7%'),
-        width: wp('50%'),
+        width: wp('40%'),
         flexDirection: 'row',
         flexWrap: 'wrap',
         justifyContent: 'flex-start',
@@ -382,7 +382,7 @@ const styles = StyleSheet.create({
         rowGap: wp('1%'),
     },
     buttonWrapper: {
-        width: wp('11%'),
+        width: wp('12%'),
         height: hp('5%'),
         alignItems: 'center',
         justifyContent: 'center',

@@ -8,6 +8,7 @@ import {
   Easing,
   Linking,
   Modal,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -380,8 +381,18 @@ const HomePage = ({ navigation }: { navigation: NavigationProp<any> }) => {
         <Image
           source={require('@/assets/images/pantalla_principal.png')}
           style={styles.backgroundImage}
-          resizeMode="stretch"
+          resizeMode={Platform.OS === 'web' ? 'stretch' : 'stretch'}
         />
+
+        {/* Manual Button */}
+        {/* <TouchableOpacity onPress={handleManualPreview} style={styles.manualButton}>
+          <Text style={styles.manualButtonText}>📖</Text>
+        </TouchableOpacity> */}
+
+        {/* Intonation Guide Button */}
+        {/* <TouchableOpacity onPress={handleIntonationGuide} style={styles.intonationButton}>
+          <Text style={styles.intonationButtonText}>🎵</Text>
+        </TouchableOpacity> */}
 
         {/* Settings Button */}
         <TouchableOpacity onPress={handleSettings} style={styles.settingsButton}>
@@ -714,7 +725,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
-  backgroundImage: {
+  backgroundImage: Platform.OS === 'web' ? {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    zIndex: -1,
+  } : {
     width: wp('100%'),
     height: hp('100%'),
     transform: [{ translateY: -hp('3%') }],

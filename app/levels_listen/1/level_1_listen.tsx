@@ -7,6 +7,7 @@ import {
   Easing,
   Image,
   ImageBackground,
+  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -23,61 +24,61 @@ const dropZones = [
     id: 1,
     name: 'obj_ale',
     position: {
-      x: wp('25%'),
-      y: hp('48%')
+      x: wp('11%'),
+      y: hp('9%')
     },
     size: {
       width: wp('5.5%'),
       height: hp('5.5%')
     },
-    borderColor: 'red',
-    backgroundColor: 'rgba(255, 0, 0, 0.3)',
-    matchName: 'ale'
-  },
-  {
-    id: 2,
-    name: 'obj_nolo_nkuo',
-    position: {
-      x: wp('15%'),
-      y: hp('110%')
-    },
-    size: {
-      width: wp('5.5%'),
-      height: hp('5.5%')
-    },
-    borderColor: 'yellow',
-    backgroundColor: 'rgba(255, 255, 0, 0.3)',
-    matchName: 'nolo nkuo'
-  },
-  {
-    id: 3,
-    name: 'obj_kapo',
-    position: {
-      x: wp('56%'),
-      y: hp('101%')
-    },
-    size: {
-      width: wp('5.5%'),
-      height: hp('5.5%')
-    },
-    borderColor: 'orange',
-    backgroundColor: 'rgba(255, 165, 0, 0.3)',
-    matchName: 'kapo'
+      borderColor: '#0046e3',
+      backgroundColor: 'rgba(0, 70, 227, 0.3)',
+      matchName: 'ale'
   },
   {
     id: 4,
-    name: 'obj_nolo_kibi',
+    name: 'obj_nolo_nkuo',
     position: {
-      x: wp('45%'),
-      y: hp('108%')
+      x: wp('13%'),
+      y: hp('23%')
     },
     size: {
       width: wp('5.5%'),
       height: hp('5.5%')
     },
-    borderColor: 'lime',
-    backgroundColor: 'rgba(86, 255, 24, 0.77)',
-    matchName: 'nolo kibi'
+      borderColor: '#e4191c',
+      backgroundColor: 'rgba(228, 25, 28, 0.3)',
+      matchName: 'nolo nkuo'
+  },
+  {
+    id: 2,
+    name: 'obj_kapo',
+    position: {
+      x: wp('13%'),
+      y: hp('38%')
+    },
+    size: {
+      width: wp('5.5%'),
+      height: hp('5.5%')
+    },
+      borderColor: '#ede430',
+      backgroundColor: 'rgba(237, 228, 48, 0.3)',
+      matchName: 'kapo'
+  },
+  {
+    id: 3,
+    name: 'obj_nolo_kibi',
+    position: {
+      x: wp('7%'),
+      y: hp('65%')
+    },
+    size: {
+      width: wp('5.5%'),
+      height: hp('5.5%')
+    },
+      borderColor: '#603f91',
+      backgroundColor: 'rgba(96, 63, 145, 0.3)',
+      matchName: 'nolo kibi'
   }
 ];
 
@@ -193,17 +194,25 @@ const Level1Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
 
   // When an audio button is tapped
   const handleAudioPress = (item: any) => {
-    if (Object.values(matches).includes(item.name)) return;
+    // Check if this audio is already matched to a zone
+    const isMatched = Object.keys(matches).some(zoneName => {
+      const zone = dropZones.find(z => z.name === zoneName);
+      return zone && zone.matchName === item.name;
+    });
+    
+    if (isMatched) return;
+    
     setSelectedAudio(item);
     playSound(item.audio);
   };
 
   // When a zone is tapped
   const handleZonePress = (zone: any) => {
+    // If this zone is already matched, do nothing
     if (matches[zone.name]) return;
     
     if (!selectedAudio) {
-      // If no audio is selected, highlight this zone
+      // If no audio is selected, highlight this zone to indicate it needs an audio
       startPulseAnimation(zone.name);
       setTimeout(() => {
         stopPulseAnimation(zone.name);
@@ -214,9 +223,26 @@ const Level1Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
     if (selectedAudio.name === zone.matchName) {
       // Correct match
       setMatches(prev => ({ ...prev, [zone.name]: true }));
+      
+      // No reproducir audio aquí, solo feedback visual
+      
+      // Reset selected audio
       setSelectedAudio(null);
+      
+      // Visual feedback for correct match
+      startPulseAnimation(zone.name);
+      setTimeout(() => {
+        stopPulseAnimation(zone.name);
+      }, 1000);
     } else {
-      // Incorrect match
+      // Incorrect match - provide visual feedback
+      // Brief animation for incorrect match
+      startPulseAnimation(zone.name);
+      setTimeout(() => {
+        stopPulseAnimation(zone.name);
+      }, 800);
+      
+      // Reset selected audio
       setSelectedAudio(null);
     }
   };
@@ -235,15 +261,16 @@ const Level1Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
         animatedValues[key].stopAnimation();
       });
     };
-  }, []);
+  }, [animatedValues]);
 
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
         <ImageBackground
-          source={require('../../../assets/images/guia1juego.png')}
+          source={require('../../../assets/images/guia1juego1.png')}
           style={styles.backgroundImage}
-          resizeMode="contain"
+          // resizeMode="contain"
+          resizeMode={Platform.OS === 'web' ? 'contain' : 'stretch'}
         >
           {/* Back Button */}
           <View style={styles.buttonsBackContainer}>
@@ -300,11 +327,13 @@ const Level1Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
                   ],
                   width: zone.size.width,
                   height: zone.size.height,
-                  borderWidth: 3,
+                  borderWidth: matches[zone.name] ? 4 : 3,
                   borderColor: zone.borderColor,
-                  backgroundColor: matches[zone.name] ? zone.backgroundColor : 'transparent',
+                  backgroundColor: matches[zone.name] ? zone.backgroundColor : 'rgba(255, 255, 255, 0.1)',
                   justifyContent: 'center',
                   alignItems: 'center',
+                  borderRadius: 5,
+                  opacity: 0.9,
                 }}
               >
                 {matches[zone.name] && (
@@ -317,9 +346,10 @@ const Level1Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
           {/* Audio Buttons */}
           <View style={styles.buttonsContainer}>
             {draggableElements.map((item) => {
-              const isMatched = Object.values(matches).some((matched, index) => {
-                return matched && dropZones[index].matchName === item.name;
-              });
+              // Check if this audio is matched to any zone
+              const isMatched = dropZones.some(zone => 
+                matches[zone.name] && zone.matchName === item.name
+              );
               
               return (
                 <View key={item.id} style={styles.buttonWrapper}>
@@ -329,6 +359,8 @@ const Level1Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
                       selectedAudio && selectedAudio.name === item.name && styles.selectedAudio,
                       isMatched && {
                         opacity: 0.5,
+                        backgroundColor: '#e0e0e0', // Gray background for matched items
+                        borderColor: '#999',
                       }
                     ]}
                     onPress={() => handleAudioPress(item)}
@@ -337,7 +369,10 @@ const Level1Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
                   >
                     <Image 
                       source={require('@/assets/images/audio.png')} 
-                      style={styles.audioIcon}
+                      style={[
+                        styles.audioIcon,
+                        isMatched && { opacity: 0.6 }
+                      ]}
                     />
                   </TouchableOpacity>
                 </View>
@@ -358,19 +393,19 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     alignSelf: 'center',
-    width: wp('100%'),
-    height: hp('135%'),
+    width: wp('80%'),
+    height: hp('100%'),
     top: hp('-2%'),
   },
   buttonsBackContainer: {
     position: 'absolute',
-    top: hp('-2%'),
+    top: hp('-1%'),
     left: wp('-8%'),
     zIndex: 1,
   },
   buttonsNextContainer: {
     position: 'absolute',
-    bottom: hp('-0%'),
+    bottom: hp('-3%'),
     right: wp('-6%'),
     zIndex: 1,
   },
@@ -401,7 +436,7 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     position: 'absolute',
-    top: hp('30%'),
+    top: hp('82%'),
     left: wp('2%'),
     width: wp('25%'),
     flexDirection: 'row',

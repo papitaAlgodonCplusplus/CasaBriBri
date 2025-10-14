@@ -471,13 +471,13 @@ const styles = StyleSheet.create({
     },
     buttonsBackContainer: {
         position: 'absolute',
-        top: hp('-2%'),
+        top: hp('-3.5%'),
         left: wp('-8%'),
         zIndex: 1,
     },
     buttonsNextContainer: {
         position: 'absolute',
-        bottom: hp('-0%'),
+        bottom: hp('-1%'),
         right: wp('-6%'),
         zIndex: 1,
     },
