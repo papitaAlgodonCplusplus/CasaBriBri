@@ -160,7 +160,7 @@ const draggableElements = [
     {
         id: 2,
         name: 'shkeki',
-        audio: require('@/assets/audios/cahmulikata.wav')
+        audio: require('@/assets/audios/shkeki.wav')
     },
     {
         id: 3,
@@ -170,7 +170,7 @@ const draggableElements = [
     {
         id: 4,
         name: 'kule',
-        audio: require('@/assets/audios/ikule.wav')
+        audio: require('@/assets/audios/kule.wav')
     },
     {
         id: 5,
@@ -185,7 +185,7 @@ const draggableElements = [
     {
         id: 7,
         name: 'seukuo',
-        audio: require('@/assets/audios/cahmulikata.wav')
+        audio: require('@/assets/audios/seukuo.wav')
     },
     {
         id: 8,
