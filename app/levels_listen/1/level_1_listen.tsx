@@ -108,6 +108,7 @@ const draggableElements = [
 
 const Level1Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
   const [selectedAudio, setSelectedAudio] = useState<any>(null);
+  const [selectedZone, setSelectedZone] = useState<string | null>(null);
   const [matches, setMatches] = useState<Record<string, boolean>>({});
   const [canContinue, setCanContinue] = useState(false);
   const [playbackSpeed, setPlaybackSpeed] = useState<'normal' | 'slow'>('normal');
@@ -192,7 +193,7 @@ const Level1Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
     animatedValues[zoneName].setValue(1);
   };
 
-  // When an audio button is tapped
+  // When an audio button is tapped - similar to handleWordPress in level_1
   const handleAudioPress = (item: any) => {
     // Check if this audio is already matched to a zone
     const isMatched = Object.keys(matches).some(zoneName => {
@@ -202,48 +203,59 @@ const Level1Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
     
     if (isMatched) return;
     
-    setSelectedAudio(item);
+    // Play sound when selecting
     playSound(item.audio);
+    
+    if (selectedZone) {
+      // A zone is already selected, check if they match
+      const zone = dropZones.find(z => z.name === selectedZone);
+      if (zone && zone.matchName === item.name) {
+        // Correct match
+        setMatches(prev => ({ ...prev, [zone.name]: true }));
+        stopPulseAnimation(selectedZone);
+        setSelectedZone(null);
+        setSelectedAudio(null);
+      } else {
+        // Incorrect match - just toggle audio selection
+        setSelectedAudio(selectedAudio?.name === item.name ? null : item);
+      }
+    } else {
+      // No zone selected, just toggle audio selection
+      setSelectedAudio(selectedAudio?.name === item.name ? null : item);
+    }
   };
 
-  // When a zone is tapped
+  // When a zone is tapped - similar to handleObjectPress in level_1
   const handleZonePress = (zone: any) => {
     // If this zone is already matched, do nothing
     if (matches[zone.name]) return;
     
-    if (!selectedAudio) {
-      // If no audio is selected, highlight this zone to indicate it needs an audio
-      startPulseAnimation(zone.name);
-      setTimeout(() => {
-        stopPulseAnimation(zone.name);
-      }, 2000);
+    // If clicking the same zone, deselect it
+    if (selectedZone === zone.name) {
+      setSelectedZone(null);
+      stopPulseAnimation(zone.name);
       return;
     }
     
-    if (selectedAudio.name === zone.matchName) {
-      // Correct match
-      setMatches(prev => ({ ...prev, [zone.name]: true }));
-      
-      // No reproducir audio aquí, solo feedback visual
-      
-      // Reset selected audio
-      setSelectedAudio(null);
-      
-      // Visual feedback for correct match
-      startPulseAnimation(zone.name);
-      setTimeout(() => {
+    // If another zone was selected, stop its animation
+    if (selectedZone) {
+      stopPulseAnimation(selectedZone);
+    }
+    
+    // Select this zone and start pulse animation
+    setSelectedZone(zone.name);
+    startPulseAnimation(zone.name);
+    
+    if (selectedAudio) {
+      // An audio is already selected, check if they match
+      if (selectedAudio.name === zone.matchName) {
+        // Correct match
+        setMatches(prev => ({ ...prev, [zone.name]: true }));
         stopPulseAnimation(zone.name);
-      }, 1000);
-    } else {
-      // Incorrect match - provide visual feedback
-      // Brief animation for incorrect match
-      startPulseAnimation(zone.name);
-      setTimeout(() => {
-        stopPulseAnimation(zone.name);
-      }, 800);
-      
-      // Reset selected audio
-      setSelectedAudio(null);
+        setSelectedZone(null);
+        setSelectedAudio(null);
+      }
+      // If incorrect, zone stays selected with pulse animation
     }
   };
 
@@ -327,7 +339,7 @@ const Level1Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
                   ],
                   width: zone.size.width,
                   height: zone.size.height,
-                  borderWidth: matches[zone.name] ? 4 : 3,
+                  borderWidth: matches[zone.name] || selectedZone === zone.name ? 4 : 3,
                   borderColor: zone.borderColor,
                   backgroundColor: matches[zone.name] ? zone.backgroundColor : 'rgba(255, 255, 255, 0.1)',
                   justifyContent: 'center',
@@ -359,7 +371,7 @@ const Level1Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
                       selectedAudio && selectedAudio.name === item.name && styles.selectedAudio,
                       isMatched && {
                         opacity: 0.5,
-                        backgroundColor: '#e0e0e0', // Gray background for matched items
+                        backgroundColor: '#e0e0e0',
                         borderColor: '#999',
                       }
                     ]}
