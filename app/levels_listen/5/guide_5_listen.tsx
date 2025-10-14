@@ -31,7 +31,7 @@ const Guide5Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
         {
             id: 2,
             name: 'tiska',
-            audio: require('@/assets/audios/tska.wav'),
+            audio: require('@/assets/audios/tiska.wav'),
         },
         {
             id: 3,

@@ -33,21 +33,21 @@ const Guide3Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
             name: 'uko',
             audio: require('@/assets/audios/uko.wav'),
         },
-        {
-            id: 3,
-            name: 'u_tso_pabakok',
-            audio: require('@/assets/audios/utsi.wav'),
-        },
+        // {
+        //     id: 3,
+        //     name: 'u_tso_pabakok',
+        //     audio: require('@/assets/audios/utsi.wav'), //  Audio no disponible
+        // },
         {
             id: 4,
             name: 'u_tsi',
             audio: require('@/assets/audios/utsi.wav'),
         },
-        {
-            id: 5,
-            name: 'pabakok',
-            audio: require('@/assets/audios/utsi.wav'),
-        },
+        // {
+        //     id: 5,
+        //     name: 'pabakok',
+        //     audio: require('@/assets/audios/utsi.wav'), // Audio no disponible
+        // },
         {
             id: 6,
             name: 'etsok',
@@ -90,23 +90,23 @@ const Guide3Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
             },
             audioName: 'uko'
         },
-        { 
-            id: 3, 
-            name: 'obj_u_tso_pabakok', 
-            style: {
-                position: 'absolute',
-                left: wp('59%'),
-                top: hp('14%'),
-                width: wp('5%'),
-                height: hp('6%'),
-                borderWidth: 3,
-                borderColor: '#0046e3',
-                backgroundColor: 'rgba(0, 70, 227, 0.3)',
-                justifyContent: 'center',
-                alignItems: 'center',
-            },
-            audioName: 'u_tso_pabakok'
-        },
+        // { 
+        //     id: 3, 
+        //     name: 'obj_u_tso_pabakok', 
+        //     style: {
+        //         position: 'absolute',
+        //         left: wp('59%'),
+        //         top: hp('14%'),
+        //         width: wp('5%'),
+        //         height: hp('6%'),
+        //         borderWidth: 3,
+        //         borderColor: '#0046e3',
+        //         backgroundColor: 'rgba(0, 70, 227, 0.3)',
+        //         justifyContent: 'center',
+        //         alignItems: 'center',
+        //     },
+        //     audioName: 'u_tso_pabakok'
+        // },
         { 
             id: 4, 
             name: 'obj_u_tsi', 
@@ -124,30 +124,30 @@ const Guide3Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
             },
             audioName: 'u_tsi'
         },
-        { 
-            id: 5, 
-            name: 'obj_pabakok', 
-            style: {
-                position: 'absolute',
-                left: wp('30%'),
-                top: hp('29%'),
-                width: wp('5%'),
-                height: hp('6%'),
-                borderWidth: 3,
-                borderColor: '#ede430',
-                backgroundColor: 'rgba(237, 228, 48, 0.3)',
-                justifyContent: 'center',
-                alignItems: 'center',
-            },
-            audioName: 'pabakok'
-        },
+        // { 
+        //     id: 5, 
+        //     name: 'obj_pabakok', 
+        //     style: {
+        //         position: 'absolute',
+        //         left: wp('78%'),
+        //         top: hp('34%'),
+        //         width: wp('5%'),
+        //         height: hp('6%'),
+        //         borderWidth: 3,
+        //         borderColor: '#ede430',
+        //         backgroundColor: 'rgba(237, 228, 48, 0.3)',
+        //         justifyContent: 'center',
+        //         alignItems: 'center',
+        //     },
+        //     audioName: 'pabakok'
+        // },
         { 
             id: 6, 
             name: 'obj_etsok', 
             style: {
                 position: 'absolute',
-                left: wp('66%'),
-                top: hp('40%'),
+                left: wp('30%'),
+                top: hp('29%'),
                 width: wp('5%'),
                 height: hp('6%'),
                 borderWidth: 3,

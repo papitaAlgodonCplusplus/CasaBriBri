@@ -26,7 +26,7 @@ const Guide7Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
         {
             id: 1,
             name: 'ajko_ko',
-            audio: require('@/assets/audios/ko.wav'),
+            audio: require('@/assets/audios/ajko.wav'),
         },
         {
             id: 2,
@@ -56,17 +56,17 @@ const Guide7Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
         {
             id: 7,
             name: 'kule',
-            audio: require('@/assets/audios/kule.wav'),
+            audio: require('@/assets/audios/kule_plato_hondo.wav'),
         },
         {
             id: 8,
             name: 'skou',
-            audio: require('@/assets/audios/sku.wav'),
+            audio: require('@/assets/audios/skou.wav'),
         },
         {
             id: 9,
             name: 'tcho_tka',
-            audio: require('@/assets/audios/tska.wav'),
+            audio: require('@/assets/audios/tcho.wav'),
         },
         {
             id: 10,

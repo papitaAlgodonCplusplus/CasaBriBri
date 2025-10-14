@@ -152,7 +152,7 @@ const Guide6Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
             name: 'obj_ko', 
             style: {
                 position: 'absolute',
-                left: wp('66%'),
+                left: wp('67%'),
                 top: hp('14%'), // y + 10
                 width: wp('5%'),
                 height: hp('6%'),

@@ -24,12 +24,12 @@ const GuideListen = ({ navigation }: { navigation: NavigationProp<any> }) => {
     // Draggable elements now hold only audio information.
     const draggableElements = [
         { id: 1, name: 'tso_klowok', audio: require('@/assets/audios/tsoklowok.wav') },
-        { id: 2, name: 'shkeki', audio: require('@/assets/audios/cahmulikata.wav') },
+        { id: 2, name: 'shkeki', audio: require('@/assets/audios/shkeki.wav') },
         { id: 3, name: 'tso', audio: require('@/assets/audios/tso.wav') },
-        { id: 4, name: 'kule', audio: require('@/assets/audios/ikule.wav') },
+        { id: 4, name: 'kule', audio: require('@/assets/audios/kule.wav') },
         { id: 5, name: 'nak_kata', audio: require('@/assets/audios/nakkata.wav') },
         { id: 6, name: 'se', audio: require('@/assets/audios/se.wav') },
-        { id: 7, name: 'seukuo', audio: require('@/assets/audios/cahmulikata.wav') },
+        { id: 7, name: 'seukuo', audio: require('@/assets/audios/seukuo.wav') },
         { id: 8, name: 'i_kule', audio: require('@/assets/audios/ikule.wav') },
         { id: 9, name: 'chamulikata', audio: require('@/assets/audios/cahmulikata.wav') },
     ];
@@ -42,7 +42,7 @@ const GuideListen = ({ navigation }: { navigation: NavigationProp<any> }) => {
             style: {
                 position: 'absolute',
                 left: wp('4%'),
-                top: hp('50%'),
+                top: hp('54%'),
                 width: wp('5%'),
                 height: hp('6%'),
                 borderWidth: 3,
@@ -58,8 +58,8 @@ const GuideListen = ({ navigation }: { navigation: NavigationProp<any> }) => {
             name: 'obj_shkeki', 
             style: {
                 position: 'absolute',
-                left: wp('11.5%'),
-                top: hp('9.5%'),
+                left: wp('31%'),
+                top: hp('83%'),
                 width: wp('5%'),
                 height: hp('6%'),
                 borderWidth: 3,
@@ -75,8 +75,8 @@ const GuideListen = ({ navigation }: { navigation: NavigationProp<any> }) => {
             name: 'obj_tso', 
             style: {
                 position: 'absolute',
-                left: wp('67.5%'),
-                top: hp('24%'),
+                left: wp('53%'),
+                top: hp('3%'),
                 width: wp('5%'),
                 height: hp('6%'),
                 borderWidth: 3,
@@ -109,8 +109,8 @@ const GuideListen = ({ navigation }: { navigation: NavigationProp<any> }) => {
             name: 'obj_nak_kata', 
             style: {
                 position: 'absolute',
-                left: wp('55.5%'),
-                top: hp('69%'),
+                left: wp('76%'),
+                top: hp('8%'),
                 width: wp('5%'),
                 height: hp('6%'),
                 borderWidth: 3,
@@ -126,8 +126,8 @@ const GuideListen = ({ navigation }: { navigation: NavigationProp<any> }) => {
             name: 'obj_se', 
             style: {
                 position: 'absolute',
-                left: wp('11.5%'),
-                top: hp('59%'),
+                left: wp('57%'),
+                top: hp('69%'),
                 width: wp('5%'),
                 height: hp('6%'),
                 borderWidth: 3,
@@ -143,8 +143,8 @@ const GuideListen = ({ navigation }: { navigation: NavigationProp<any> }) => {
             name: 'obj_seukuo', 
             style: {
                 position: 'absolute',
-                left: wp('31.5%'),
-                top: hp('83.2%'),
+                left: wp('70%'),
+                top: hp('47%'),
                 width: wp('5%'),
                 height: hp('6%'),
                 borderWidth: 3,
@@ -160,7 +160,7 @@ const GuideListen = ({ navigation }: { navigation: NavigationProp<any> }) => {
             name: 'obj_i_kule', 
             style: {
                 position: 'absolute',
-                left: wp('5%'),
+                left: wp('4%'),
                 top: hp('28%'),
                 width: wp('5%'),
                 height: hp('6%'),
@@ -177,8 +177,8 @@ const GuideListen = ({ navigation }: { navigation: NavigationProp<any> }) => {
             name: 'obj_chamulikata', 
             style: {
                 position: 'absolute',
-                left: wp('18%'),
-                top: hp('75%'),
+                left: wp('4%'),
+                top: hp('16%'),
                 width: wp('5%'),
                 height: hp('6%'),
                 borderWidth: 3,
