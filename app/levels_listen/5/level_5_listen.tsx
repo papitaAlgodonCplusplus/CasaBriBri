@@ -16,8 +16,8 @@ const dropZones = [
         id: 1,
         name: 'obj_chane',
         position: { 
-            x: wp('57%'),
-            y: hp('22%')
+            x: wp('58%'),
+            y: hp('15%')
         },
         size: {
             width: wp('6%'),
@@ -31,8 +31,8 @@ const dropZones = [
         id: 2,
         name: 'obj_tiska',
         position: { 
-            x: wp('67%'),
-            y: hp('70%')
+            x: wp('69%'),
+            y: hp('62%')
         },
         size: {
             width: wp('6%'),
@@ -46,8 +46,8 @@ const dropZones = [
         id: 3,
         name: 'obj_kowolo',
         position: { 
-            x: wp('65%'),
-            y: hp('48%')
+            x: wp('66.9%'),
+            y: hp('43%')
         },
         size: {
             width: wp('6%'),
@@ -61,8 +61,8 @@ const dropZones = [
         id: 4,
         name: 'obj_klowok',
         position: { 
-            x: wp('66%'),
-            y: hp('33%')
+            x: wp('67.5%'),
+            y: hp('27%')
         },
         size: {
             width: wp('6%'),
