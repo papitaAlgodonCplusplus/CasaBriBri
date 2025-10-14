@@ -1028,7 +1028,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderWidth: 2,
     borderColor: '#FFD700',
-    width: wp('45%'),
+    width: wp('38%'),
     minHeight: hp('10%'),
     zIndex: 11,
   },
