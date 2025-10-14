@@ -193,7 +193,37 @@ const HomePage = ({ navigation }: { navigation: NavigationProp<any> }) => {
           ]).start();
         } else {
           // Skip to next step if practice not available
-          advanceTutorial();
+          // Don't call advanceTutorial() recursively, just update the step
+          setTutorialStep(4);
+          // Manually trigger the animation for step 4
+          Animated.parallel([
+            Animated.timing(toucanPosition, {
+              toValue: { x: wp('15%'), y: hp('15%') },
+              duration: 1000,
+              useNativeDriver: true,
+            }),
+            Animated.timing(bubbleOpacity, {
+              toValue: 1,
+              duration: 500,
+              useNativeDriver: true,
+              delay: 800,
+            }),
+            Animated.loop(
+              Animated.sequence([
+                Animated.timing(buttonHighlight, {
+                  toValue: 1,
+                  duration: 800,
+                  useNativeDriver: false,
+                }),
+                Animated.timing(buttonHighlight, {
+                  toValue: 0.2,
+                  duration: 800,
+                  useNativeDriver: false,
+                }),
+              ]),
+              { iterations: 3 }
+            ),
+          ]).start();
         }
         break;
       case 4: // Point to settings button
@@ -520,7 +550,7 @@ const HomePage = ({ navigation }: { navigation: NavigationProp<any> }) => {
                 <Text style={styles.sectionTitle}>Alfabeto BriBri</Text>
                 <View style={styles.alphabetContainer}>
                   <Text style={styles.alphabetText}>
-                    a a̱ b ch d e ë e̱ i i̱ j k l m n ñ o ö o̱ p r s sh t tk ts u u̱ w y '
+                    a a̱ b ch d e ë e̱ i i̱ j k l m n ñ o ö o̱ p r s sh t tk ts u u̱ w y &apos;
                   </Text>
                 </View>
               </View>
