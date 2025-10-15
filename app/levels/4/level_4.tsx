@@ -23,6 +23,7 @@ import NextButton from '../../misc/NextButton';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { getResponsivePos } from '../../misc/responsivePosition';
+import { completeLevel, LevelMode } from '../../misc/progress';
 
 const bgImage = require('@/assets/images/guia4juego.png');
 
@@ -127,6 +128,9 @@ const Level4 = ({ navigation }: { navigation: NavigationProp<any> }) => {
     const [matches, setMatches] = useState<Record<string, string>>({});
     const [canContinue, setCanContinue] = useState(false);
 
+    const LEVEL_ID = 4;
+    const LEVEL_MODE = LevelMode.READ;
+
     const animatedValues = useRef(
         visualObjects.reduce((acc, obj) => {
             acc[obj.name] = new Animated.Value(1);
@@ -219,6 +223,8 @@ const Level4 = ({ navigation }: { navigation: NavigationProp<any> }) => {
     useEffect(() => {
         if (Object.keys(matches).length === visualObjects.length) {
             setCanContinue(true);
+            // Mark level as completed
+            completeLevel(LEVEL_ID, LEVEL_MODE);
         }
     }, [matches]);
 

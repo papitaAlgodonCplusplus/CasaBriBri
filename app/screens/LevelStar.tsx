@@ -35,6 +35,8 @@ const StarsProgress: React.FC<StarsProgressProps> = ({
       setLoaded(true);
     };
 
+  
+
     loadProgress();
   }, []);
 

@@ -10,6 +10,7 @@ import BackButton from '../../misc/BackButton';
 import NextButton from '../../misc/NextButton';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { completeLevel, LevelMode } from '../../misc/progress';
 
 // Drop zones with same positions and sizes as visualObjects in level_6.tsx
 const dropZones = [
@@ -164,7 +165,10 @@ const Level6Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
     const [selectedZone, setSelectedZone] = useState<string | null>(null);
     const [matches, setMatches] = useState<Record<string, boolean>>({});
     const [canContinue, setCanContinue] = useState(false);
-    
+
+    const LEVEL_ID = 6;
+    const LEVEL_MODE = LevelMode.LISTEN;
+
     const animatedValues = useRef(
         dropZones.reduce((acc, zone) => {
             acc[zone.name] = new Animated.Value(1);
@@ -262,6 +266,8 @@ const Level6Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
     useEffect(() => {
         if (Object.keys(matches).length === dropZones.length) {
             setCanContinue(true);
+            // Mark level as completed
+            completeLevel(LEVEL_ID, LEVEL_MODE);
         }
     }, [matches]);
 

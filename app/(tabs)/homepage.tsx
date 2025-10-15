@@ -68,8 +68,8 @@ const HomePage = ({ navigation }: { navigation: NavigationProp<any> }) => {
           // Only start tutorial if:
           // 1. Toucan is enabled
           // 2. Tutorial is not already running (tutorialStep === 0)
-          // 3. Either this is the first load (wasEnabled === null) or toucan was just enabled
-          if (enabled && tutorialStep === 0 && (wasEnabled === null || (!wasEnabled && enabled))) {
+          // 3. Either this is the first load (wasEnabled === null) or toucan was just enabled or re-enabled
+          if (enabled && tutorialStep === 0 && (wasEnabled === null || wasEnabled === false)) {
             console.log('Starting tutorial');
             startTutorial();
           }
@@ -325,10 +325,19 @@ const HomePage = ({ navigation }: { navigation: NavigationProp<any> }) => {
   };
 
   const handleToucanPress = () => {
-    if (tutorialStep > 7) {
+    if (tutorialStep === 0) {
+      // Start the tutorial from the beginning
+      startTutorial();
+    } else if (tutorialStep > 6) {
+      // Reset tutorial after completion
       setTutorialStep(0);
+      toucanScale.setValue(0);
+      bubbleOpacity.setValue(0);
+      buttonHighlight.setValue(0);
+    } else {
+      // Advance to next step
+      advanceTutorial();
     }
-    advanceTutorial();
   };
 
   // Get tutorial message based on current step

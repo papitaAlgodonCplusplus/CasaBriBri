@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationProp } from '@react-navigation/native';
 import { Audio } from 'expo-av';
 import React, { useEffect, useState } from 'react';
+import { completeLevel, LevelMode } from '../../misc/progress';
 import {
   Animated,
   Easing,
@@ -111,12 +112,15 @@ const Level1Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
   const [matches, setMatches] = useState<Record<string, boolean>>({});
   const [canContinue, setCanContinue] = useState(false);
   const [playbackSpeed, setPlaybackSpeed] = useState<'normal' | 'slow'>('normal');
-  const [animatedValues] = useState(() => 
+  const [animatedValues] = useState(() =>
     dropZones.reduce((acc, zone) => {
       acc[zone.name] = new Animated.Value(1);
       return acc;
     }, {} as Record<string, Animated.Value>)
   );
+
+  const LEVEL_ID = 1;
+  const LEVEL_MODE = LevelMode.LISTEN;
 
   // Load speed preference from storage
   useEffect(() => {
@@ -251,6 +255,8 @@ const Level1Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
   useEffect(() => {
     if (Object.keys(matches).length === dropZones.length) {
       setCanContinue(true);
+      // Mark level as completed
+      completeLevel(LEVEL_ID, LEVEL_MODE);
     }
   }, [matches]);
 
