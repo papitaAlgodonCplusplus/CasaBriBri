@@ -1,16 +1,14 @@
-import { LogBox } from 'react-native';
+import { NavigationProp } from '@react-navigation/native';
+import { Audio } from 'expo-av';
+import React, { useEffect, useRef, useState } from 'react';
+import { Animated, Easing, Image, ImageBackground, LogBox, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import BackButton from '../../misc/BackButton';
+import NextButton from '../../misc/NextButton';
 LogBox.ignoreLogs([
   'Draggable: Support for defaultProps will be removed'
 ]);
-import React, { useState, useEffect, useRef } from 'react';
-import { View, ImageBackground, StyleSheet, TouchableOpacity, ScrollView, Image, Animated, Easing } from 'react-native';
-import { Audio } from 'expo-av';
-import { NavigationProp } from '@react-navigation/native';
-import BackButton from '../../misc/BackButton';
-import NextButton from '../../misc/NextButton';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { completeLevel, LevelMode } from '../../misc/progress';
 
 // Drop zones with same positions and sizes as visualObjects in level_3.tsx
 const dropZones = [
@@ -19,7 +17,7 @@ const dropZones = [
         name: 'obj_u_tto',
         position: { 
             x: wp('9%'),
-            y: hp('60%')
+            y: hp('59.9%')
         },
         size: {
             width: wp('6%'),
@@ -34,7 +32,7 @@ const dropZones = [
         name: 'obj_uko',
         position: { 
             x: wp('65.4%'),
-            y: hp('67%')
+            y: hp('68%')
         },
         size: {
             width: wp('6%'),
@@ -64,7 +62,7 @@ const dropZones = [
         name: 'obj_u_tsi',
         position: { 
             x: wp('50%'),
-            y: hp('61%')
+            y: hp('62.5%')
         },
         size: {
             width: wp('6%'),
@@ -191,7 +189,7 @@ const Level3Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
         animatedValues[zoneName].setValue(1);
     };
 
-    // When audio button is pressed
+    // When audio button is pressed - similar to handleWordPress in level_1
     const handleAudioPress = (item: any) => {
         const isMatched = Object.entries(matches).some(([key, value]) => {
             const zone = dropZones.find(z => z.name === key);
@@ -200,45 +198,59 @@ const Level3Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
         
         if (isMatched) return;
         
-        setSelectedAudio(item);
+        // Play sound when selecting
         playSound(item.audio);
         
         if (selectedZone) {
+            // A zone is already selected, check if they match
             const zone = dropZones.find(z => z.name === selectedZone);
             if (zone && zone.matchName === item.name) {
                 // Correct match
-                setMatches(prev => ({ ...prev, [selectedZone]: true }));
+                setMatches(prev => ({ ...prev, [zone.name]: true }));
                 stopPulseAnimation(selectedZone);
                 setSelectedZone(null);
                 setSelectedAudio(null);
+            } else {
+                // Incorrect match - just toggle audio selection
+                setSelectedAudio(selectedAudio?.name === item.name ? null : item);
             }
+        } else {
+            // No zone selected, just toggle audio selection
+            setSelectedAudio(selectedAudio?.name === item.name ? null : item);
         }
     };
 
-    // When a drop zone is pressed
+    // When a drop zone is pressed - similar to handleObjectPress in level_1
     const handleZonePress = (zone: any) => {
+        // If this zone is already matched, do nothing
         if (matches[zone.name]) return;
         
+        // If clicking the same zone, deselect it
         if (selectedZone === zone.name) {
-            // Deselect if already selected
             setSelectedZone(null);
             stopPulseAnimation(zone.name);
             return;
         }
         
+        // If another zone was selected, stop its animation
         if (selectedZone) {
             stopPulseAnimation(selectedZone);
         }
         
+        // Select this zone and start pulse animation
         setSelectedZone(zone.name);
         startPulseAnimation(zone.name);
         
-        if (selectedAudio && selectedAudio.name === zone.matchName) {
-            // If audio is already selected and matches this zone
-            setMatches(prev => ({ ...prev, [zone.name]: true }));
-            stopPulseAnimation(zone.name);
-            setSelectedZone(null);
-            setSelectedAudio(null);
+        if (selectedAudio) {
+            // An audio is already selected, check if they match
+            if (selectedAudio.name === zone.matchName) {
+                // Correct match
+                setMatches(prev => ({ ...prev, [zone.name]: true }));
+                stopPulseAnimation(zone.name);
+                setSelectedZone(null);
+                setSelectedAudio(null);
+            }
+            // If incorrect, zone stays selected with pulse animation
         }
     };
 
@@ -258,6 +270,7 @@ const Level3Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
                 animatedValues[key].stopAnimation();
             });
         };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
@@ -300,7 +313,7 @@ const Level3Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
                                     ],
                                     width: zone.size.width,
                                     height: zone.size.height,
-                                    borderWidth: 3,
+                                    borderWidth: matches[zone.name] || selectedZone === zone.name ? 4 : 3,
                                     borderColor: zone.borderColor,
                                     backgroundColor: matches[zone.name] ? zone.backgroundColor : 'transparent',
                                     justifyContent: 'center',
@@ -330,6 +343,8 @@ const Level3Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
                                             selectedAudio && selectedAudio.name === item.name && styles.selectedAudio,
                                             isMatched && {
                                                 opacity: 0.5,
+                                                backgroundColor: '#e0e0e0',
+                                                borderColor: '#999',
                                             }
                                         ]}
                                         onPress={() => handleAudioPress(item)}
@@ -338,7 +353,10 @@ const Level3Listen = ({ navigation }: { navigation: NavigationProp<any> }) => {
                                     >
                                         <Image 
                                             source={require('@/assets/images/audio.png')} 
-                                            style={styles.audioIcon}
+                                            style={[
+                                                styles.audioIcon,
+                                                isMatched && { opacity: 0.6 }
+                                            ]}
                                         />
                                     </TouchableOpacity>
                                 </View>
